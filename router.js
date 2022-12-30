@@ -14,8 +14,8 @@ import { AntDesign } from '@expo/vector-icons';
 import { Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
-import { logOut } from './redux/auth/authOperations';
-import { updateUserProfile } from './redux/auth/authSlice';
+// import { logOut } from './redux/auth/authOperations';
+// import { updateUserProfile } from './redux/auth/authSlice';
 import { auth } from './firebase/config';
 
 const AuthStack = createStackNavigator();

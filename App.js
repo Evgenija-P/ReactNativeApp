@@ -20,7 +20,7 @@ import RegistrationScreen from './components/Screens/auth/RegistrationScreen';
 import LoginScreen from './components/Screens/auth/LoginScreen';
 import Home from './components/Screens/mainScreen/Home';
 
-// const AuthStack = createStackNavigator();
+const AuthStack = createStackNavigator();
 // const loadFonts = async () => {
 //   await Font.loadAsync({
 //     'Roboto-Regular': require('./assets/fonts/Roboto/Roboto-Regular.ttf'),
@@ -36,64 +36,7 @@ const App = () => {
     setUser(user);
   });
 
-  // const route = useRoute(user);
-
-  // if (!isReady) {
-  //   return (
-  //     <AppLoading
-  //       startAsync={loadFonts}
-  //       onFinish={() => setIsReady(true)}
-  //       onError={error => console.log(error)}
-  //     />
-  //   );
-  // }
-
-  // return (
-  //   <Provider store={store}>
-  //     <NavigationContainer>
-  //       <AuthStack.Navigator>
-  //         <AuthStack.Screen
-  //           options={{ headerShown: false }}
-  //           name="Register"
-  //           component={RegistrationScreen}
-  //         />
-  //         <AuthStack.Screen
-  //           options={{ headerShown: false }}
-  //           name="Login"
-  //           component={LoginScreen}
-  //         />
-  //         {user.email && (
-  //           <AuthStack.Screen
-  //             name="Home"
-  //             component={Home}
-  //             options={({ navigation }) => ({
-  //               headerStyle: {
-  //                 backgroundColor: '#ff8c00',
-  //               },
-  //               headerTintColor: '#f8f8ff',
-  //               headerTitleStyle: {
-  //                 fontWeight: 'bold',
-  //                 fontSize: 20,
-  //               },
-  //               headerRight: () => (
-  //                 <View>
-  //                   <TouchableOpacity
-  //                     // style={styles.inputShow}
-  //                     onPress={() => {
-  //                       navigation.navigate('Login');
-  //                     }}
-  //                   >
-  //                     <Entypo name="login" size={24} color="#f8f8ff" />
-  //                   </TouchableOpacity>
-  //                 </View>
-  //               ),
-  //             })}
-  //           />
-  //         )}
-  //       </AuthStack.Navigator>
-  //     </NavigationContainer>
-  //   </Provider>
-  // );
+  console.log(user);
 
   const route = useRoute(user);
 
@@ -106,10 +49,69 @@ const App = () => {
   //     />
   //   );
   // }
+
   return (
     <Provider store={store}>
-      <NavigationContainer>{route}</NavigationContainer>
+      <NavigationContainer>
+        <AuthStack.Navigator>
+          <AuthStack.Screen
+            options={{ headerShown: false }}
+            name="Register"
+            component={RegistrationScreen}
+          />
+          <AuthStack.Screen
+            options={{ headerShown: false }}
+            name="Login"
+            component={LoginScreen}
+          />
+          {user && (
+            <AuthStack.Screen
+              name="Home"
+              component={Home}
+              options={({ navigation }) => ({
+                headerStyle: {
+                  backgroundColor: '#ff8c00',
+                },
+                headerTintColor: '#f8f8ff',
+                headerTitleStyle: {
+                  fontWeight: 'bold',
+                  fontSize: 20,
+                },
+                headerRight: () => (
+                  <View>
+                    <TouchableOpacity
+                      // style={styles.inputShow}
+                      onPress={() => {
+                        navigation.navigate('Login');
+                      }}
+                    >
+                      <Entypo name="login" size={24} color="#f8f8ff" />
+                    </TouchableOpacity>
+                  </View>
+                ),
+              })}
+            />
+          )}
+        </AuthStack.Navigator>
+      </NavigationContainer>
     </Provider>
   );
+
+  // const route = useRoute(user);
+
+  // if (!isReady) {
+  //   return (
+  //     <AppLoading
+  //       startAsync={loadFonts}
+  //       onFinish={() => setIsReady(true)}
+  //       onError={error => console.log(error)}
+  //     />
+  //   );
+  // }
+  // return (
+  //   <Provider store={store}>
+  //     <NavigationContainer>{route}</NavigationContainer>
+  //   </Provider>
+  // );
 };
 export default App;

@@ -1,8 +1,10 @@
 import firebase from '../../../firebase/config';
+import { authSlice } from './authReduser';
 import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile,
 } from 'firebase/auth';
 
 const auth = getAuth();
@@ -13,7 +15,18 @@ export const register =
     console.log('email', email, 'password', password, 'login', login);
     try {
       const user = await createUserWithEmailAndPassword(auth, email, password);
-      console.log('user', user);
+      dispatch(
+        authSlice.actions.updateUserProfile({
+          userId: user.uid,
+          displayName: login,
+        })
+      );
+      // updateProfile(auth.user, {
+      //   displayName: login,
+      //   photoURL: '',
+      // }).catch(e => console.error(e));
+      console.log('login', login, 'userId', user.user.uid);
+      return { user: user, login };
     } catch (error) {
       console.log('error', error);
       console.log('error.message', error.message);
