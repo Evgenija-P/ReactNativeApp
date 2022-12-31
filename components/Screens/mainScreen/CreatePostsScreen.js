@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { getApp } from 'firebase/app';
 import { Camera } from 'expo-camera';
 import * as Location from 'expo-location';
 import { Feather } from '@expo/vector-icons';
@@ -11,6 +13,11 @@ import {
   Keyboard,
 } from 'react-native';
 import { styles } from '../../../Styled';
+import db from '../../../firebase/config';
+
+const storage = getStorage(db);
+console.log('hello!1', storage);
+// console.log('ref', ref());
 
 const CreatePostsScreen = ({ navigation }) => {
   const initialState = {
@@ -18,6 +25,7 @@ const CreatePostsScreen = ({ navigation }) => {
     name: '',
     place: '',
   };
+
   const [postData, setPostData] = useState(initialState);
   const [camera, setCamera] = useState(null);
   const [location, setLocation] = useState(null);
@@ -68,13 +76,27 @@ const CreatePostsScreen = ({ navigation }) => {
   };
 
   const sendPhoto = () => {
+    loadFoto();
     navigation.navigate('DefaultScreen', { postData, location });
     setPostData(prevState => ({
       ...prevState,
-      // photo: null,
       name: '',
       place: '',
     }));
+  };
+
+  const loadFoto = async () => {
+    const response = await fetch(postData.photo);
+    const file = await response.blob();
+
+    const uniquePostId = Date.now().toString();
+
+    const imageRef = ref(storage, `images/${uniquePostId}`);
+
+    await uploadBytes(imageRef, file);
+    const data = await getDownloadURL(ref(storage, `images/${uniquePostId}`));
+    console.log('data-------->', data);
+    return data;
   };
 
   if (hasCamPermission === false) {
