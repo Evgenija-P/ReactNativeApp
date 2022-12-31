@@ -4,6 +4,8 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
   updateProfile,
 } from 'firebase/auth';
 
@@ -12,7 +14,6 @@ const auth = getAuth();
 export const register =
   ({ email, password, login }) =>
   async (dispatch, getSatte) => {
-    console.log('email', email, 'password', password, 'login', login);
     try {
       const user = await createUserWithEmailAndPassword(auth, email, password);
       dispatch(
@@ -21,14 +22,8 @@ export const register =
           displayName: login,
         })
       );
-      // updateProfile(auth.user, {
-      //   displayName: login,
-      //   photoURL: '',
-      // }).catch(e => console.error(e));
-      console.log('login', login, 'userId', user.user.uid);
       return { user: user, login };
     } catch (error) {
-      console.log('error', error);
       console.log('error.message', error.message);
     }
   };
@@ -39,18 +34,27 @@ export const login =
     console.log('email', email, 'password', password);
     try {
       const userLogin = await signInWithEmailAndPassword(auth, email, password);
-      console.log('userLogin', userLogin);
     } catch (error) {
-      console.log('error', error);
       console.log('error.message', error.message);
     }
   };
 
-export const out = () => async (dispatch, getState) => {};
+export const out = () => async (dispatch, getState) => {
+  try {
+    await signOut(auth);
+    dispatch(authSlice.actions.authSingOut());
+    return true;
+  } catch (error) {
+    console.log('error.message', error.message);
+  }
+};
 
 export const authStateCahngeUser = () => async (dispatch, getState) => {
   await auth.onAuthStateChanged(user => {
-    setUser(user);
+    console.log(user);
+    if (user) {
+      dispatch(authSlice.actions.authStateChange({ stateChange: true }));
+    }
   });
 };
 

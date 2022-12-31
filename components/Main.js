@@ -6,33 +6,36 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { View, TouchableOpacity } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
-
 import { getAuth } from 'firebase/auth';
 
-const auth = getAuth();
-
 import { store } from '../components/redux/store';
+import { authStateCahngeUser, out } from './redux/auth/authOperations';
+
 import RegistrationScreen from './Screens/auth/RegistrationScreen';
 import LoginScreen from './Screens/auth/LoginScreen';
 import Home from './Screens/mainScreen/Home';
 
+const auth = getAuth();
 const AuthStack = createStackNavigator();
 
 const Main = () => {
   const [user, setUser] = useState(null);
+  const { stateChange } = useSelector(state => state.auth);
   const state = useSelector(state => state);
+  const dispatch = useDispatch();
+  console.log(stateChange);
   console.log(state);
 
-  auth.onAuthStateChanged(user => setUser(user));
-  useEffect(() => {}, []);
+  useEffect(() => {
+    dispatch(authStateCahngeUser());
+  }, []);
 
-  // auth.onAuthStateChanged(user => {
-  //   setUser(user);
-  // });
+  const singOut = () => {
+    dispatch(out());
+  };
+  //   console.log(stateChange);
 
-  console.log(user);
-
-  if (!user) {
+  if (!stateChange) {
     return (
       <NavigationContainer>
         <AuthStack.Navigator>
@@ -68,11 +71,7 @@ const Main = () => {
             },
             headerRight: () => (
               <View>
-                <TouchableOpacity
-                  onPress={() => {
-                    navigation.navigate('Login');
-                  }}
-                >
+                <TouchableOpacity onPress={singOut}>
                   <Entypo name="login" size={24} color="#f8f8ff" />
                 </TouchableOpacity>
               </View>
