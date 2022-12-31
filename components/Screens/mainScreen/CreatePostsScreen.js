@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
+import { collection, addDoc } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { getApp } from 'firebase/app';
 import { Camera } from 'expo-camera';
@@ -13,9 +15,9 @@ import {
   Keyboard,
 } from 'react-native';
 import { styles } from '../../../Styled';
-import db from '../../../firebase/config';
+import { storage, db } from '../../../firebase/config';
 
-const storage = getStorage(db);
+// const storage = getStorage(db);
 console.log('hello!1', storage);
 // console.log('ref', ref());
 
