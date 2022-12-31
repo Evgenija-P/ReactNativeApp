@@ -161,4 +161,93 @@ export const styles = StyleSheet.create({
     color: firstColor,
   },
   postButtom: { marginRight: 250 },
+  containerComments: {
+    flex: 1,
+    backgroundColor: 'secondColor',
+    padding: 12,
+    paddingBottom: 0,
+  },
+  commentFormBtnTitle: {
+    color: 'secondColor',
+    fontSize: 16,
+  },
+  commentFormBtn: {
+    alignItems: 'center',
+    backgroundColor: 'secondColor',
+    marginBottom: 16,
+    paddingVertical: 16,
+    borderRadius: 100,
+  },
+
+  commentInput: {
+    height: 50,
+    padding: 16,
+    backgroundColor: 'transparent',
+    borderBottomWidth: 1,
+    borderBottomColor: 'firstColor',
+    fontSize: 16,
+  },
+  commentView: {
+    marginBottom: 20,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  commentText: {
+    backgroundColor: 'secondColor',
+    padding: 16,
+    borderRadius: 6,
+    marginLeft: 5,
+  },
+  commentText: {
+    fontSize: 13,
+  },
+  containerProfile: {
+    flex: 1,
+  },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: 'cover',
+    justifyContent: 'flex-end',
+  },
+  containerViewProfile: {
+    backgroundColor: '#FFFFFF',
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
+    paddingHorizontal: 10,
+    paddingTop: 85,
+    paddingBottom: 10,
+    maxHeight: '70%',
+  },
+  profileTitle: {
+    fontSize: 30,
+    alignItems: 'center',
+  },
+  titleProfile: {
+    alignItems: 'center',
+    marginBottom: 30,
+  },
+  logOut: {
+    position: 'absolute',
+    top: 20,
+    right: 20,
+  },
+  image: {
+    height: 240,
+    borderRadius: 8,
+  },
+  imageWrapper: {
+    borderRadius: 8,
+    marginBottom: 8,
+  },
+  postWrapper: {
+    marginBottom: 20,
+  },
+  btnWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  potoWrapper: {
+    marginBottom: 10,
+  },
 });

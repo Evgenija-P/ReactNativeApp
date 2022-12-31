@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { View, FlatList, Image, Text, TouchableOpacity } from 'react-native';
 import { Feather, FontAwesome } from '@expo/vector-icons';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../../firebase/firebase-config';
 import { styles } from '../../../Styled';
 
 const DefaultScreenPosts = ({ route, navigation }) => {
   const [posts, setPosts] = useState([]);
 
+  const getAllPosts = async () => {
+    const data = await getDocs(collection(db, 'posts'));
+    const posts = data.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+    setPosts(posts);
+  };
+
   useEffect(() => {
-    if (route.params) {
-      setPosts(prevState => [...prevState, route.params]);
-    }
-  }, [route.params]);
+    getAllPosts();
+  }, [getAllPosts]);
 
   return (
     <View style={styles.container}>
