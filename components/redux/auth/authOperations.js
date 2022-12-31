@@ -17,7 +17,7 @@ export const register =
       const user = await createUserWithEmailAndPassword(auth, email, password);
       dispatch(
         authSlice.actions.updateUserProfile({
-          userId: user.uid,
+          userId: user.user.uid,
           displayName: login,
         })
       );
@@ -46,18 +46,13 @@ export const login =
     }
   };
 
-// signInWithEmailAndPassword(auth, email, password)
-//   .then(userCredential => {
-//     // Signed in
-//     const user = userCredential.user;
-//     // ...
-//   })
-//   .catch(error => {
-//     const errorCode = error.code;
-//     const errorMessage = error.message;
-//   });
-
 export const out = () => async (dispatch, getState) => {};
+
+export const authStateCahngeUser = () => async (dispatch, getState) => {
+  await auth.onAuthStateChanged(user => {
+    setUser(user);
+  });
+};
 
 // import { createAsyncThunk } from '@reduxjs/toolkit';
 // import {
