@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import { collection, addDoc } from 'firebase/firestore';
-import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { getApp } from 'firebase/app';
+import { collection, addDoc, doc, setDoc } from 'firebase/firestore';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { Camera } from 'expo-camera';
 import * as Location from 'expo-location';
 import { Feather } from '@expo/vector-icons';
@@ -17,9 +16,7 @@ import {
 import { styles } from '../../../Styled';
 import { storage, db } from '../../../firebase/config';
 
-// const storage = getStorage(db);
-console.log('hello!1', storage);
-// console.log('ref', ref());
+// console.log('hello!1', storage);
 
 const CreatePostsScreen = ({ navigation }) => {
   const initialState = {
@@ -36,6 +33,9 @@ const CreatePostsScreen = ({ navigation }) => {
   const [hasLocationPermission, setHasLocationPermission] = useState(false);
   const [state, setstate] = useState(initialState);
   const [keyboardStatus, setKeyboardStatus] = useState(false);
+  const stateScreen = useSelector(state => state.auth);
+
+  // console.log('storage, db', db);
 
   useEffect(() => {
     const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
@@ -77,28 +77,58 @@ const CreatePostsScreen = ({ navigation }) => {
     setLocation(currentLocation.coords);
   };
 
+  const loadFoto = async () => {
+    const response = await fetch(postData.photo);
+    const file = await response.blob();
+    const photoId = Date.now().toString();
+    const imageRef = ref(storage, `images/${photoId}`);
+    await uploadBytes(imageRef, file);
+    const data = await getDownloadURL(ref(storage, `images/${photoId}`));
+    console.log('data-------->', data);
+    return data;
+  };
+
+  const addPost = async () => {
+    const docRef = await addDoc(collection(db, 'cities'), {
+      name: 'Tokyo',
+      country: 'Japan',
+    });
+    console.log('Document written with ID: ', docRef.id);
+  };
+
+  const loadPost = async () => {
+    const photo = await loadFoto();
+    // const currentLocation = await Location.getCurrentPositionAsync({});
+    // console.log('currentLocation', currentLocation.coords);
+    // const statePost = {
+    //   photo,
+    //   photoLocation: currentLocation.coords,
+    //   photoPlase: postData.place,
+    //   photoName: postData.name,
+    //   userId: stateScreen.userId,
+    //   login: stateScreen.login,
+    // };
+    // console.log('statePost', statePost);
+    // const docRef = await addDoc(collection(db, 'posts'), {
+    //   photo,
+    // });
+    // const docRef = await addDoc(collection(db, 'cities'), {
+    //   name: 'Tokyo',
+    //   country: 'Japan',
+    // });
+    // console.log('Document written with ID: ', docRef.id);
+  };
+
   const sendPhoto = () => {
-    loadFoto();
-    navigation.navigate('DefaultScreen', { postData, location });
+    // loadFoto();
+    addPost();
+    // navigation.navigate('DefaultScreen', { postData, location });
+    navigation.navigate('DefaultScreen');
     setPostData(prevState => ({
       ...prevState,
       name: '',
       place: '',
     }));
-  };
-
-  const loadFoto = async () => {
-    const response = await fetch(postData.photo);
-    const file = await response.blob();
-
-    const uniquePostId = Date.now().toString();
-
-    const imageRef = ref(storage, `images/${uniquePostId}`);
-
-    await uploadBytes(imageRef, file);
-    const data = await getDownloadURL(ref(storage, `images/${uniquePostId}`));
-    console.log('data-------->', data);
-    return data;
   };
 
   if (hasCamPermission === false) {

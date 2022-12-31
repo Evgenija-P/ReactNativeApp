@@ -1,15 +1,13 @@
-import firebase from '../../../firebase/config';
+import { auth } from '../../../firebase/config';
 import { authSlice } from './authReduser';
 import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-  // onAuthStateChanged,
-  // updateProfile,
 } from 'firebase/auth';
 
-const auth = getAuth();
+// const auth = getAuth();
 
 export const register =
   ({ email, password, login }) =>
