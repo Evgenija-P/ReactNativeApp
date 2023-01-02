@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { collection, addDoc } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
@@ -18,7 +18,7 @@ import { storage, db } from '../../../firebase/config';
 
 const CreatePostsScreen = ({ navigation }) => {
   const initialState = {
-    photo: null,
+    photo: '',
     name: '',
     place: '',
   };
@@ -68,8 +68,9 @@ const CreatePostsScreen = ({ navigation }) => {
 
   const makePhoto = async () => {
     const photo = await camera.takePictureAsync();
-    setPostData(prevState => ({ ...prevState, photo: photo.uri }));
     const currentLocation = await Location.getCurrentPositionAsync({});
+
+    setPostData(prevState => ({ ...prevState, photo: photo.uri }));
     setLocation(currentLocation.coords);
   };
 
@@ -119,8 +120,17 @@ const CreatePostsScreen = ({ navigation }) => {
     <View style={styles.tabContainerCreate}>
       <Camera style={styles.camera} ref={setCamera}>
         {postData.photo && (
-          <View style={styles.photoContainer}>
-            <Image source={{ uri: postData.photo }} style={styles.photo} />
+          <View
+            style={
+              keyboardStatus
+                ? styles.photoContainerSmal
+                : styles.photoContainerBig
+            }
+          >
+            <Image
+              source={{ uri: postData.photo }}
+              style={keyboardStatus ? styles.photoSmal : styles.photoBig}
+            />
           </View>
         )}
 

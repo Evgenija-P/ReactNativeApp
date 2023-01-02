@@ -22,5 +22,3 @@ export const authSlice = createSlice({
     authSingOut: () => state,
   },
 });
-
-// console.log('authSlice', authSlice);

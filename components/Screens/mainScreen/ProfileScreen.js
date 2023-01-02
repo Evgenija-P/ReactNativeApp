@@ -1,34 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  View,
-  Text,
-  ImageBackground,
-  Image,
-  FlatList,
-  TouchableOpacity,
-} from 'react-native';
-
+import { View, Text, Image, FlatList, TouchableOpacity } from 'react-native';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../../../firebase/config';
-
-import {
-  MaterialIcons,
-  MaterialCommunityIcons,
-  EvilIcons,
-} from '@expo/vector-icons';
-
+import { MaterialIcons, Feather, FontAwesome } from '@expo/vector-icons';
 import { out } from '../../redux/auth/authOperations';
 import { styles } from '../../../Styled';
 
 const ProfileScreen = ({ navigation }) => {
-  console.log('hello PROFILE!!!!!!');
   const stateScreen = useSelector(state => state.auth);
   const [profilePosts, setProfilePosts] = useState([]);
   const dispatch = useDispatch();
-  console.log(stateScreen.login);
 
   const id = stateScreen.userId;
+  console.log('ProfileScreen!!!!!!!!!!!!!');
+  console.log(stateScreen);
 
   useEffect(() => {
     getAllProfilePosts();
@@ -38,9 +24,7 @@ const ProfileScreen = ({ navigation }) => {
     const data = await getDocs(
       query(collection(db, 'users'), where('userId', '==', id))
     );
-    console.log(data);
     const posts = data.docs.map(doc => ({ ...doc.data(), id: doc.id }));
-    console.log(posts);
     setProfilePosts(posts);
   };
 
@@ -66,37 +50,30 @@ const ProfileScreen = ({ navigation }) => {
             data={profilePosts}
             keyExtractor={item => item.id}
             renderItem={({ item }) => (
-              console.log(item, item.photoLocation),
-              (
-                <View style={styles.postWrapper}>
-                  <View style={styles.imageWrapper}>
-                    <Image source={{ uri: item.photo }} style={styles.image} />
-                  </View>
-                  <View style={styles.potoWrapper}>
-                    <Text>{item.photoCaption}</Text>
-                  </View>
-                  <View style={styles.btnWrapper}>
-                    <TouchableOpacity
-                      activeOpacity={0.8}
-                      onPress={() =>
-                        navigation.navigate('Comments', { postId: item.id })
-                      }
-                    >
-                      <EvilIcons name="comment" size={25} color="#BDBDBD" />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      activeOpacity={0.8}
-                      onPress={() => navigation.navigate('Map', item)}
-                    >
-                      <MaterialCommunityIcons
-                        name="map-marker"
-                        size={25}
-                        color="#BDBDBD"
-                      />
-                    </TouchableOpacity>
-                  </View>
+              <View style={styles.postWrapper}>
+                <View style={styles.imageWrapper}>
+                  <Image source={{ uri: item.photo }} style={styles.image} />
                 </View>
-              )
+                <View style={styles.potoWrapper}>
+                  <Text>{item.photoCaption}</Text>
+                </View>
+                <View style={styles.btnWrapper}>
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={() =>
+                      navigation.navigate('Comments', { postId: item.id })
+                    }
+                  >
+                    <FontAwesome name="comment-o" size={24} color="#ff8c00" />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={() => navigation.navigate('Map', item)}
+                  >
+                    <Feather name="map-pin" size={24} color="#ff8c00" />
+                  </TouchableOpacity>
+                </View>
+              </View>
             )}
           />
         )}

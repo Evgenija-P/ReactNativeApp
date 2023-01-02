@@ -9,10 +9,12 @@ const notActive = '#8F8F8F';
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: secondColor,
+  },
+  containerComment: {
+    marginLeft: 'auto',
+    marginRight: 'auto',
   },
   title: {
-    // fontFamily: 'Starndart-fonts',
     textAlign: 'center',
     marginTop: 60,
     marginBottom: 30,
@@ -47,7 +49,7 @@ export const styles = StyleSheet.create({
     marginBottom: 10,
     backgroundColor: inputColor,
   },
-  image: {
+  bgImage: {
     flex: 1,
     resizeMode: 'cover',
     justifyContent: 'flex-end',
@@ -132,15 +134,36 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  photoContainer: {
+  photoContainerBig: {
     position: 'absolute',
     top: 20,
     left: 10,
     borderColor: '#fff',
     borderWidth: 1,
     borderRadius: 10,
+    height: 150,
+    width: 150,
   },
-  photo: { borderRadius: 10, height: 200, width: 200 },
+  photoContainerSmal: {
+    position: 'absolute',
+    top: 20,
+    left: 10,
+    borderColor: '#fff',
+    borderWidth: 1,
+    borderRadius: 10,
+    height: 80,
+    width: 80,
+  },
+  photoBig: {
+    borderRadius: 10,
+    height: 150,
+    width: 150,
+  },
+  photoSmal: {
+    borderRadius: 10,
+    height: 80,
+    width: 80,
+  },
 
   postItemContainer: {
     marginBottom: 10,
@@ -161,6 +184,22 @@ export const styles = StyleSheet.create({
     color: firstColor,
   },
   postButtom: { marginRight: 250 },
+  commentButton: {
+    width: 34,
+    height: 34,
+    border: 1,
+    borderRadius: 100,
+    height: 51,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  photoComments: {
+    justifyContent: 'center',
+    width: 350,
+    height: 200,
+    borderRadius: 10,
+    marginTop: 10,
+  },
   containerComments: {
     flex: 1,
     backgroundColor: 'secondColor',
@@ -178,7 +217,7 @@ export const styles = StyleSheet.create({
     paddingVertical: 16,
     borderRadius: 100,
   },
-
+  comment: { height: 300 },
   commentInput: {
     height: 50,
     padding: 16,

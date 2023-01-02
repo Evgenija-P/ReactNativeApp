@@ -53,7 +53,7 @@ const RegistrationScreen = ({ navigation }) => {
     keyboardHide();
     setRegistrationData(state);
     dispatch(register(state));
-    console.log(state);
+
     setstate(initialState);
   };
 
@@ -61,13 +61,13 @@ const RegistrationScreen = ({ navigation }) => {
     <TouchableWithoutFeedback onPress={keyboardHide}>
       <View style={styles.container}>
         <ImageBackground
-          style={styles.image}
+          style={styles.bgImage}
           source={require('../../../assets/image/image_1.jpg')}
         >
           <View
             style={{
               ...styles.containerForm,
-              marginBottom: keyboardStatus ? -130 : 20,
+              paddingBottom: keyboardStatus ? 10 : 20,
             }}
           >
             <Image
@@ -81,7 +81,7 @@ const RegistrationScreen = ({ navigation }) => {
               />
             </TouchableOpacity>
             <KeyboardAvoidingView
-              behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
+              behavior={Platform.OS == 'ios' ? 'padding' : ''}
             >
               <Text style={styles.title}>Registration</Text>
               <TextInput

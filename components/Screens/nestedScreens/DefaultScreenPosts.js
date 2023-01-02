@@ -5,14 +5,15 @@ import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../../firebase/config';
 import { styles } from '../../../Styled';
 
-const DefaultScreenPosts = ({ route, navigation }) => {
+const DefaultScreenPosts = ({ navigation }) => {
   const [posts, setPosts] = useState([]);
 
   const getAllPosts = async () => {
-    const data = await getDocs(collection(db, 'posts'));
+    const data = await getDocs(collection(db, 'users'));
     const posts = data.docs.map(doc => ({ ...doc.data(), id: doc.id }));
     setPosts(posts);
   };
+  // getAllPosts();
 
   // useEffect(() => {
   //   getAllPosts();
@@ -20,31 +21,26 @@ const DefaultScreenPosts = ({ route, navigation }) => {
 
   return (
     <View style={styles.container}>
-      {/* {!route.params && <Text style={styles.postTitle}>No Posts</Text>}
+      {!posts && <Text style={styles.postTitle}>No Posts</Text>}
       <FlatList
         data={posts}
         keyExtractor={(item, indx) => indx.toString()}
         renderItem={({ item }) => (
           <View style={styles.postItemContainer}>
-            <Text style={styles.postTitle}>{item.postData.name}</Text>
-            <Image
-              source={{ uri: item.postData.photo }}
-              style={styles.postImage}
-            />
+            <Text style={styles.postTitle}>{item.photoCaption}</Text>
+            <Image source={{ uri: item.photo }} style={styles.postImage} />
             <View style={styles.postButtomContainer}>
               <TouchableOpacity
                 style={styles.postButtom}
                 title="Comments"
-                onPress={() => navigation.navigate('Comments')}
+                onPress={() => navigation.navigate('Comments', item)}
               >
                 <FontAwesome name="comment-o" size={24} color="#ff8c00" />
               </TouchableOpacity>
-              {item.location && (
+              {item.photoLocation && (
                 <TouchableOpacity
                   title="Map"
-                  onPress={() =>
-                    navigation.navigate('Map', item, console.log(item))
-                  }
+                  onPress={() => navigation.navigate('Map', item)}
                 >
                   <Feather name="map-pin" size={24} color="#ff8c00" />
                 </TouchableOpacity>
@@ -52,7 +48,7 @@ const DefaultScreenPosts = ({ route, navigation }) => {
             </View>
           </View>
         )}
-      /> */}
+      />
     </View>
   );
 };

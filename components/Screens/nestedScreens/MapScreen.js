@@ -3,7 +3,6 @@ import MapView, { Marker } from 'react-native-maps';
 import { View } from 'react-native';
 
 const MapScreen = ({ route }) => {
-  console.log(route.params);
   const coordinate = route.params.photoLocation;
   const title = route.params.postPlase;
 

@@ -50,7 +50,6 @@ const LoginScreen = ({ navigation }) => {
     keyboardHide();
     setLoginData(state);
     dispatch(login(loginData));
-    console.log(state);
     setstate(initialState);
   };
 
@@ -58,17 +57,17 @@ const LoginScreen = ({ navigation }) => {
     <TouchableWithoutFeedback onPress={keyboardHide}>
       <View style={styles.container}>
         <ImageBackground
-          style={styles.image}
+          style={styles.bgImage}
           source={require('../../../assets/image/image_1.jpg')}
         >
           <View
             style={{
               ...styles.containerForm,
-              marginBottom: keyboardStatus ? -130 : 20,
+              paddingBottom: keyboardStatus ? 10 : 50,
             }}
           >
             <KeyboardAvoidingView
-              behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
+              behavior={Platform.OS == 'ios' ? 'padding' : ''}
             >
               <Text style={styles.title}>Authorization</Text>
               <TextInput
