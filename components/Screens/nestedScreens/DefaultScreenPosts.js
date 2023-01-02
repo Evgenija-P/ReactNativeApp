@@ -7,11 +7,18 @@ import { styles } from '../../../Styled';
 
 const DefaultScreenPosts = ({ navigation }) => {
   const [posts, setPosts] = useState([]);
+  const [start, setStart] = useState(false);
 
   const getAllPosts = async () => {
-    const data = await getDocs(collection(db, 'users'));
-    const posts = data.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+    try {
+      const data = await getDocs(collection(db, 'users'));
+      const posts = data.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+      console.log('Document written with ID: ', docRef.id);
+    } catch (e) {
+      console.error('Error adding document: ', e);
+    }
     setPosts(posts);
+    setStart(true);
   };
 
   useEffect(() => {
@@ -20,7 +27,7 @@ const DefaultScreenPosts = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      {!posts && <Text style={styles.postTitle}>No Posts</Text>}
+      {!start && <Text style={styles.postTitle}>No Posts</Text>}
       <FlatList
         data={posts}
         keyExtractor={(item, indx) => indx.toString()}

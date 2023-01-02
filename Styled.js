@@ -174,8 +174,10 @@ export const styles = StyleSheet.create({
   postTitle: {
     color: firstColor,
     fontWeight: 'bold',
-    fontSize: 16,
-    marginBottom: 5,
+    fontSize: 26,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginTop: '50%',
   },
   postButtomContainer: {
     flexDirection: 'row',
