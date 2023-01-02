@@ -115,7 +115,6 @@ const LoginScreen = ({ navigation }) => {
                 activeOpacity={0.8}
                 onPress={() => {
                   handleSubmit();
-                  navigation.navigate('Home');
                 }}
               >
                 <Text style={styles.buttonTitle}>Sign In</Text>
