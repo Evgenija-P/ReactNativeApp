@@ -13,12 +13,11 @@ const DefaultScreenPosts = ({ navigation }) => {
     try {
       const data = await getDocs(collection(db, 'users'));
       const posts = data.docs.map(doc => ({ ...doc.data(), id: doc.id }));
-      console.log('Document written with ID: ', docRef.id);
+      setPosts(posts);
+      setStart(true);
     } catch (e) {
       console.error('Error adding document: ', e);
     }
-    setPosts(posts);
-    setStart(true);
   };
 
   useEffect(() => {
@@ -27,7 +26,7 @@ const DefaultScreenPosts = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      {!start && <Text style={styles.postTitle}>No Posts</Text>}
+      {!posts && <Text style={styles.postTitleNoPhoto}>No Posts</Text>}
       <FlatList
         data={posts}
         keyExtractor={(item, indx) => indx.toString()}
@@ -43,6 +42,7 @@ const DefaultScreenPosts = ({ navigation }) => {
               >
                 <FontAwesome name="comment-o" size={24} color="#ff8c00" />
               </TouchableOpacity>
+
               {item.photoLocation && (
                 <TouchableOpacity
                   title="Map"

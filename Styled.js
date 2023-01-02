@@ -166,12 +166,19 @@ export const styles = StyleSheet.create({
   },
 
   postItemContainer: {
-    marginBottom: 10,
+    // marginBottom: 10,
     justifyContent: 'center',
     alignItems: 'center',
   },
   postImage: { width: 350, height: 200 },
   postTitle: {
+    color: firstColor,
+    fontWeight: 'bold',
+    fontSize: 26,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  },
+  postTitleNoPhoto: {
     color: firstColor,
     fontWeight: 'bold',
     fontSize: 26,
@@ -252,11 +259,10 @@ export const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   containerViewProfile: {
-    backgroundColor: '#FFFFFF',
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     paddingHorizontal: 10,
-    paddingTop: 85,
+    paddingTop: 10,
     paddingBottom: 10,
     maxHeight: '70%',
   },
@@ -274,7 +280,7 @@ export const styles = StyleSheet.create({
     right: 20,
   },
   image: {
-    height: 240,
+    height: 200,
     borderRadius: 8,
   },
   imageWrapper: {

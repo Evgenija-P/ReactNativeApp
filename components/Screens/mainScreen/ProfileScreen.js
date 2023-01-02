@@ -18,11 +18,19 @@ const ProfileScreen = ({ navigation }) => {
   }, [getAllProfilePosts]);
 
   const getAllProfilePosts = async () => {
-    const data = await getDocs(
-      query(collection(db, 'users'), where('userId', '==', id))
-    );
-    const posts = data.docs.map(doc => ({ ...doc.data(), id: doc.id }));
-    setProfilePosts(posts);
+    console.log(stateScreen.userId);
+    try {
+      const data = await getDocs(
+        query(
+          collection(db, 'users'),
+          where('userId', '==', `${stateScreen.userId}`)
+        )
+      );
+      const posts = data.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+      setProfilePosts(posts);
+    } catch (e) {
+      console.error('Error adding document: ', e);
+    }
   };
 
   return (
@@ -37,21 +45,25 @@ const ProfileScreen = ({ navigation }) => {
             keyExtractor={item => item.id}
             renderItem={({ item }) => (
               <View style={styles.postWrapper}>
-                <View style={styles.imageWrapper}>
-                  <Image source={{ uri: item.photo }} style={styles.image} />
-                </View>
                 <View style={styles.potoWrapper}>
                   <Text>{item.photoCaption}</Text>
                 </View>
+                <View style={styles.imageWrapper}>
+                  <Image source={{ uri: item.photo }} style={styles.image} />
+                </View>
+
                 <View style={styles.btnWrapper}>
-                  <TouchableOpacity
-                    activeOpacity={0.8}
-                    onPress={() =>
-                      navigation.navigate('Comments', { postId: item.id })
-                    }
-                  >
-                    <FontAwesome name="comment-o" size={24} color="#ff8c00" />
-                  </TouchableOpacity>
+                  <View>
+                    <TouchableOpacity
+                      activeOpacity={0.8}
+                      onPress={() =>
+                        navigation.navigate('Comments', { postId: item.id })
+                      }
+                    >
+                      <FontAwesome name="comment-o" size={24} color="#ff8c00" />
+                    </TouchableOpacity>
+                  </View>
+
                   <TouchableOpacity
                     activeOpacity={0.8}
                     onPress={() => navigation.navigate('Map', item)}

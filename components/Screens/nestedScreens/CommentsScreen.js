@@ -48,6 +48,7 @@ export default function CommentsScreen({ route }) {
   const getComments = async () => {
     const data = await getDocs(collection(db, `users/${id}/comments`));
     const comments = data.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+
     setAllComments(comments);
   };
 
@@ -95,7 +96,7 @@ export default function CommentsScreen({ route }) {
               onFocus={() => setKeyboardStatus(true)}
               placeholderTextColor="#ff8c00"
             />
-            <TouchableOpacity style={styles.inputShow}>
+            <TouchableOpacity style={styles.inputShow} onPress={loadComment}>
               <MaterialCommunityIcons
                 name="send-circle-outline"
                 size={38}
