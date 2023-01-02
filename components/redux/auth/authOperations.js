@@ -36,7 +36,6 @@ export const login =
           userId: userLogin.user.uid,
         })
       );
-      console.log(userLogin.user.uid, userLogin.user.displayName);
     } catch (error) {
       console.log('error.message', error.message);
     }

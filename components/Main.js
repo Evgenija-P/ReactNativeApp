@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import firebase from '../firebase/config';
+
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
@@ -8,7 +8,6 @@ import { View, TouchableOpacity } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 import { getAuth } from 'firebase/auth';
 
-import { store } from '../components/redux/store';
 import { authStateCahngeUser, out } from './redux/auth/authOperations';
 
 import RegistrationScreen from './Screens/auth/RegistrationScreen';
@@ -23,8 +22,6 @@ const Main = () => {
   const { stateChange } = useSelector(state => state.auth);
   const state = useSelector(state => state);
   const dispatch = useDispatch();
-  console.log(stateChange);
-  console.log(state);
 
   useEffect(() => {
     dispatch(authStateCahngeUser());
@@ -33,7 +30,6 @@ const Main = () => {
   const singOut = () => {
     dispatch(out());
   };
-  //   console.log(stateChange);
 
   if (!stateChange) {
     return (

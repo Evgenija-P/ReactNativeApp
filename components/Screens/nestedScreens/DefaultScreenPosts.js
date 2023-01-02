@@ -13,11 +13,10 @@ const DefaultScreenPosts = ({ navigation }) => {
     const posts = data.docs.map(doc => ({ ...doc.data(), id: doc.id }));
     setPosts(posts);
   };
-  // getAllPosts();
 
-  // useEffect(() => {
-  //   getAllPosts();
-  // }, [getAllPosts]);
+  useEffect(() => {
+    getAllPosts();
+  }, [getAllPosts]);
 
   return (
     <View style={styles.container}>

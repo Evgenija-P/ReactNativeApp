@@ -1,20 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { View, Text, Image, FlatList, TouchableOpacity } from 'react-native';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../../../firebase/config';
-import { MaterialIcons, Feather, FontAwesome } from '@expo/vector-icons';
-import { out } from '../../redux/auth/authOperations';
+import { Feather, FontAwesome } from '@expo/vector-icons';
+
 import { styles } from '../../../Styled';
 
 const ProfileScreen = ({ navigation }) => {
   const stateScreen = useSelector(state => state.auth);
   const [profilePosts, setProfilePosts] = useState([]);
-  const dispatch = useDispatch();
 
   const id = stateScreen.userId;
-  console.log('ProfileScreen!!!!!!!!!!!!!');
-  console.log(stateScreen);
 
   useEffect(() => {
     getAllProfilePosts();
@@ -28,20 +25,9 @@ const ProfileScreen = ({ navigation }) => {
     setProfilePosts(posts);
   };
 
-  const signOut = () => {
-    dispatch(out());
-  };
-
   return (
     <View style={styles.containerProfile}>
       <View style={styles.containerViewProfile}>
-        <TouchableOpacity
-          style={styles.logOut}
-          activeOpacity={0.8}
-          onPress={signOut}
-        >
-          <MaterialIcons name="logout" size={24} color="#BDBDBD" />
-        </TouchableOpacity>
         <View style={styles.titleProfile}>
           <Text style={styles.profileTitle}>{stateScreen.login}</Text>
         </View>

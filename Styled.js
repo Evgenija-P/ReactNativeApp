@@ -289,4 +289,17 @@ export const styles = StyleSheet.create({
   potoWrapper: {
     marginBottom: 10,
   },
+  commentWrapper: {
+    padding: 5,
+    borderRadius: 20,
+    borderWidth: 2,
+    borderColor: firstColor,
+    marginTop: 5,
+  },
+  commentName: {
+    fontSize: 20,
+    color: firstColor,
+    fontWeight: 'bold',
+  },
+  commentText: { paddingLeft: 10 },
 });

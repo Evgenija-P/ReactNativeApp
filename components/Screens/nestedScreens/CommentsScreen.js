@@ -58,14 +58,7 @@ export default function CommentsScreen({ route }) {
 
   return (
     <TouchableWithoutFeedback onPress={keyboardHide}>
-      <View
-        style={{
-          // ...styles.container,
-          height: 400,
-          backgroundColor: 'black',
-          marginBottom: keyboardStatus ? 350 : 200,
-        }}
-      >
+      <View style={styles.container}>
         <View style={styles.containerComment}>
           <View styles={styles.postImage}>
             <Image
@@ -73,17 +66,19 @@ export default function CommentsScreen({ route }) {
               style={styles.photoComments}
             />
           </View>
-          <View style={styles.comment}>
+          <View
+            style={{ ...styles.comment, height: keyboardStatus ? 80 : 320 }}
+          >
             {allComments && (
               <SafeAreaView>
                 <FlatList
                   data={allComments}
                   keyExtractor={item => item.id}
                   renderItem={({ item }) => (
-                    <View>
-                      <Text>{item.login}</Text>
+                    <View style={styles.commentWrapper}>
+                      <Text style={styles.commentName}>{item.login}</Text>
                       <View>
-                        <Text>{item.comment}</Text>
+                        <Text style={styles.commentText}>{item.comment}</Text>
                       </View>
                     </View>
                   )}
@@ -91,23 +86,22 @@ export default function CommentsScreen({ route }) {
               </SafeAreaView>
             )}
           </View>
-          <View style={styles.form}>
+          <View>
             <TextInput
-              placeholder="Комментарий"
+              placeholder="Comment"
               style={styles.input}
               value={comment}
               onChangeText={value => setComment(value)}
               onFocus={() => setKeyboardStatus(true)}
+              placeholderTextColor="#ff8c00"
             />
-            <View style={styles.commentButton}>
-              <TouchableOpacity activeOpacity={0.8} onPress={loadComment}>
-                <MaterialCommunityIcons
-                  name="send-circle-outline"
-                  size={24}
-                  color="#ff8c00"
-                />
-              </TouchableOpacity>
-            </View>
+            <TouchableOpacity style={styles.inputShow}>
+              <MaterialCommunityIcons
+                name="send-circle-outline"
+                size={38}
+                color="#ff8c00"
+              />
+            </TouchableOpacity>
           </View>
         </View>
       </View>
