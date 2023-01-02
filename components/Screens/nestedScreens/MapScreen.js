@@ -1,11 +1,11 @@
 import React from 'react';
 import MapView, { Marker } from 'react-native-maps';
-import { Text, View } from 'react-native';
-import { styles } from '../../../Styled';
+import { View } from 'react-native';
 
 const MapScreen = ({ route }) => {
-  const coordinate = route.params.location;
-  const title = route.params.postData.place;
+  console.log(route.params);
+  const coordinate = route.params.photoLocation;
+  const title = route.params.postPlase;
 
   return (
     <View style={{ flex: 1 }}>

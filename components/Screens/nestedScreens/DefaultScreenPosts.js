@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, FlatList, Image, Text, TouchableOpacity } from 'react-native';
 import { Feather, FontAwesome } from '@expo/vector-icons';
 import { collection, getDocs } from 'firebase/firestore';
-import { db } from '../../firebase/firebase-config';
+import { db } from '../../../firebase/config';
 import { styles } from '../../../Styled';
 
 const DefaultScreenPosts = ({ route, navigation }) => {
@@ -14,13 +14,13 @@ const DefaultScreenPosts = ({ route, navigation }) => {
     setPosts(posts);
   };
 
-  useEffect(() => {
-    getAllPosts();
-  }, [getAllPosts]);
+  // useEffect(() => {
+  //   getAllPosts();
+  // }, [getAllPosts]);
 
   return (
     <View style={styles.container}>
-      {!route.params && <Text style={styles.postTitle}>No Posts</Text>}
+      {/* {!route.params && <Text style={styles.postTitle}>No Posts</Text>}
       <FlatList
         data={posts}
         keyExtractor={(item, indx) => indx.toString()}
@@ -52,7 +52,7 @@ const DefaultScreenPosts = ({ route, navigation }) => {
             </View>
           </View>
         )}
-      />
+      /> */}
     </View>
   );
 };

@@ -7,8 +7,6 @@ import {
   signOut,
 } from 'firebase/auth';
 
-// const auth = getAuth();
-
 export const register =
   ({ email, password, login }) =>
   async (dispatch, getSatte) => {

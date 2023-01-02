@@ -1,17 +1,17 @@
-import * as firebase from 'firebase/app';
+// import * as firebase from 'firebase/app';
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getStorage } from 'firebase/storage';
 import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyBC9TG-q-Ogq0e-inH3-RLx-gpwFsqGuaM',
-  authDomain: 'mobileapp-5f974.firebaseapp.com',
-  projectId: 'mobileapp-5f974',
-  storageBucket: 'mobileapp-5f974.appspot.com',
-  messagingSenderId: '340946017657',
-  appId: '1:340946017657:web:2e392d9d103b86a0b023a8',
-  measurementId: 'G-SDB5EEYX5Z',
+  apiKey: 'AIzaSyARiA51IPf2PSJahE1SMu9ROXuYU7zKQ8I',
+  authDomain: 'hw-react-native.firebaseapp.com',
+  projectId: 'hw-react-native',
+  storageBucket: 'hw-react-native.appspot.com',
+  messagingSenderId: '333646516758',
+  appId: '1:333646516758:web:947662bee4443298e8db37',
+  measurementId: 'G-ZZLQ2E11EN',
 };
 
 const app = initializeApp(firebaseConfig);

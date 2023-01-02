@@ -5,13 +5,12 @@ import {
   Text,
   ImageBackground,
   Image,
-  StyleSheet,
   FlatList,
   TouchableOpacity,
 } from 'react-native';
 
 import { collection, getDocs, query, where } from 'firebase/firestore';
-import { db } from '../../firebase/firebase-config';
+import { db } from '../../../firebase/config';
 
 import {
   MaterialIcons,
@@ -23,9 +22,13 @@ import { out } from '../../redux/auth/authOperations';
 import { styles } from '../../../Styled';
 
 const ProfileScreen = ({ navigation }) => {
-  const { login, id } = useSelector(state => state.auth.user);
+  console.log('hello PROFILE!!!!!!');
+  const stateScreen = useSelector(state => state.auth);
   const [profilePosts, setProfilePosts] = useState([]);
   const dispatch = useDispatch();
+  console.log(stateScreen.login);
+
+  const id = stateScreen.userId;
 
   useEffect(() => {
     getAllProfilePosts();
@@ -33,37 +36,38 @@ const ProfileScreen = ({ navigation }) => {
 
   const getAllProfilePosts = async () => {
     const data = await getDocs(
-      query(collection(db, 'posts'), where('userId', '==', id))
+      query(collection(db, 'users'), where('userId', '==', id))
     );
+    console.log(data);
     const posts = data.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+    console.log(posts);
     setProfilePosts(posts);
   };
 
   const signOut = () => {
     dispatch(out());
   };
+
   return (
     <View style={styles.containerProfile}>
-      <ImageBackground
-        style={styles.image}
-        source={require('../../../assets/image/image_1.jpg')}
-      >
-        <View style={styles.containerViewProfile}>
-          <TouchableOpacity
-            style={styles.logOut}
-            activeOpacity={0.8}
-            onPress={signOut}
-          >
-            <MaterialIcons name="logout" size={24} color="#BDBDBD" />
-          </TouchableOpacity>
-          <View style={styles.titleProfile}>
-            <Text style={styles.profileTitle}>{login}</Text>
-          </View>
-          {profilePosts && (
-            <FlatList
-              data={profilePosts}
-              keyExtractor={item => item.id}
-              renderItem={({ item }) => (
+      <View style={styles.containerViewProfile}>
+        <TouchableOpacity
+          style={styles.logOut}
+          activeOpacity={0.8}
+          onPress={signOut}
+        >
+          <MaterialIcons name="logout" size={24} color="#BDBDBD" />
+        </TouchableOpacity>
+        <View style={styles.titleProfile}>
+          <Text style={styles.profileTitle}>{stateScreen.login}</Text>
+        </View>
+        {profilePosts && (
+          <FlatList
+            data={profilePosts}
+            keyExtractor={item => item.id}
+            renderItem={({ item }) => (
+              console.log(item, item.photoLocation),
+              (
                 <View style={styles.postWrapper}>
                   <View style={styles.imageWrapper}>
                     <Image source={{ uri: item.photo }} style={styles.image} />
@@ -82,11 +86,7 @@ const ProfileScreen = ({ navigation }) => {
                     </TouchableOpacity>
                     <TouchableOpacity
                       activeOpacity={0.8}
-                      onPress={() =>
-                        navigation.navigate('Map', {
-                          location: item.photoLocation,
-                        })
-                      }
+                      onPress={() => navigation.navigate('Map', item)}
                     >
                       <MaterialCommunityIcons
                         name="map-marker"
@@ -96,11 +96,11 @@ const ProfileScreen = ({ navigation }) => {
                     </TouchableOpacity>
                   </View>
                 </View>
-              )}
-            />
-          )}
-        </View>
-      </ImageBackground>
+              )
+            )}
+          />
+        )}
+      </View>
     </View>
   );
 };

@@ -80,27 +80,29 @@ const CreatePostsScreen = ({ navigation }) => {
     const imageRef = ref(storage, `images/${photoId}`);
     await uploadBytes(imageRef, file);
     const data = await getDownloadURL(ref(storage, `images/${photoId}`));
-    console.log('data-------->', data);
     return data;
   };
 
   const loadPost = async () => {
     const photo = await loadFoto();
     const currentLocation = await Location.getCurrentPositionAsync({});
-    const docRef = await addDoc(collection(db, 'posts'), {
-      photo,
-      photoLocation: currentLocation.coords,
-      photoPlase: postData.place,
-      photoName: postData.name,
-      userId: stateScreen.userId,
-      login: stateScreen.login,
-    });
-    console.log('Document written with ID: ', docRef.id);
+    try {
+      const docRef = await addDoc(collection(db, 'users'), {
+        photo,
+        photoLocation: currentLocation.coords,
+        postPlase: postData.place,
+        photoCaption: postData.name,
+        userId: stateScreen.userId,
+        login: stateScreen.login,
+      });
+      console.log('Document written with ID: ', docRef.id);
+    } catch (e) {
+      console.error('Error adding document: ', e);
+    }
   };
 
   const sendPhoto = () => {
-    loadFoto();
-    addPost();
+    loadPost();
     navigation.navigate('DefaultScreen');
     setPostData(prevState => ({
       ...prevState,

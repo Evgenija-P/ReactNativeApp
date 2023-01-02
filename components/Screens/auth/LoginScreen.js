@@ -49,7 +49,7 @@ const LoginScreen = ({ navigation }) => {
   const handleSubmit = () => {
     keyboardHide();
     setLoginData(state);
-    dispatch(login(state));
+    dispatch(login(loginData));
     console.log(state);
     setstate(initialState);
   };
