@@ -28,7 +28,10 @@ const ProfileScreen = ({ navigation }) => {
     console.log(stateScreen.userId);
     try {
       const data = await getDocs(
-        query(collection(db, 'users'), where('userId', '==', `${id}`))
+        query(
+          collection(db, 'users'),
+          where('userId', '==', `${stateScreen.userId}`)
+        )
       );
       const posts = data.docs.map(doc => ({ ...doc.data(), id: doc.id }));
       setProfilePosts(posts);
