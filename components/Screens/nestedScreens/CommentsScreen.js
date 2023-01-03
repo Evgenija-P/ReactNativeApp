@@ -18,11 +18,11 @@ import { styles } from '../../../Styled';
 
 export default function CommentsScreen({ route }) {
   const [keyboardStatus, setKeyboardStatus] = useState(false);
-
   const [comment, setComment] = useState('');
   const { login } = useSelector(state => state.auth);
-  const { id } = route.params;
   const [allComments, setAllComments] = useState([]);
+
+  const id = route.params;
 
   useEffect(() => {
     getComments();
@@ -48,7 +48,6 @@ export default function CommentsScreen({ route }) {
   const getComments = async () => {
     const data = await getDocs(collection(db, `users/${id}/comments`));
     const comments = data.docs.map(doc => ({ ...doc.data(), id: doc.id }));
-
     setAllComments(comments);
   };
 

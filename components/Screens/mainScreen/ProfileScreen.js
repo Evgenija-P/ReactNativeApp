@@ -25,7 +25,6 @@ const ProfileScreen = ({ navigation }) => {
   }, [getAllProfilePosts]);
 
   const getAllProfilePosts = async () => {
-    console.log(stateScreen.userId);
     try {
       const data = await getDocs(
         query(
@@ -34,6 +33,8 @@ const ProfileScreen = ({ navigation }) => {
         )
       );
       const posts = data.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+      console.log(data);
+      console.log(posts);
       setProfilePosts(posts);
     } catch (error) {
       Alert.alert('Oops!', 'Problem with receiving posts. Try again', [
@@ -67,7 +68,14 @@ const ProfileScreen = ({ navigation }) => {
                     <TouchableOpacity
                       activeOpacity={0.8}
                       onPress={() =>
-                        navigation.navigate('Comments', { postId: item.id })
+                        navigation.navigate(
+                          'Comments',
+                          { postId: item.id },
+                          console.log(
+                            'Comments-----item.id------onPress',
+                            item.id
+                          )
+                        )
                       }
                     >
                       <FontAwesome name="comment-o" size={24} color="#ff8c00" />

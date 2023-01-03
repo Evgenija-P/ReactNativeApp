@@ -48,7 +48,7 @@ const DefaultScreenPosts = ({ navigation }) => {
               <TouchableOpacity
                 style={styles.postButtom}
                 title="Comments"
-                onPress={() => navigation.navigate('Comments', item)}
+                onPress={() => navigation.navigate('Comments', item.id)}
               >
                 <FontAwesome name="comment-o" size={24} color="#ff8c00" />
               </TouchableOpacity>
