@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, FlatList, Image, Text, TouchableOpacity } from 'react-native';
+import {
+  View,
+  FlatList,
+  Image,
+  Text,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
 import { Feather, FontAwesome } from '@expo/vector-icons';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../../firebase/config';
@@ -15,8 +22,16 @@ const DefaultScreenPosts = ({ navigation }) => {
       const posts = data.docs.map(doc => ({ ...doc.data(), id: doc.id }));
       setPosts(posts);
       setStart(true);
-    } catch (e) {
-      console.error('Error adding document: ', e);
+    } catch (error) {
+      Alert.alert('Sorry, we have problem' + `${error.message}`, [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        { text: 'OK', onPress: () => console.log('OK Pressed') },
+      ]);
+      console.log('error.message', error.message);
     }
   };
 

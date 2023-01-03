@@ -12,6 +12,7 @@ import {
   Image,
   TextInput,
   Keyboard,
+  Alert,
 } from 'react-native';
 import { styles } from '../../../Styled';
 import { storage, db } from '../../../firebase/config';
@@ -97,8 +98,16 @@ const CreatePostsScreen = ({ navigation }) => {
         login: stateScreen.login,
       });
       console.log('Document written with ID: ', docRef.id);
-    } catch (e) {
-      console.error('Error adding document: ', e);
+    } catch (error) {
+      Alert.alert('Sorry, we have problem' + `${error.message}`, [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        { text: 'OK', onPress: () => console.log('OK Pressed') },
+      ]);
+      console.log('error.message', error.message);
     }
   };
 
