@@ -14,6 +14,7 @@ import {
   Keyboard,
   Alert,
 } from 'react-native';
+import { useIsFocused } from '@react-navigation/native';
 import { styles } from '../../../Styled';
 import { storage, db } from '../../../firebase/config';
 
@@ -34,6 +35,8 @@ const CreatePostsScreen = ({ navigation }) => {
   const [keyboardStatus, setKeyboardStatus] = useState(false);
   const stateScreen = useSelector(state => state.auth);
 
+  const isFocused = useIsFocused();
+
   useEffect(() => {
     const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
       setKeyboardStatus(true);
@@ -42,6 +45,12 @@ const CreatePostsScreen = ({ navigation }) => {
       setKeyboardStatus(false);
     });
   });
+
+  useEffect(() => {
+    if (!isFocused) {
+      setPostData(initialState);
+    }
+  }, [isFocused]);
 
   const keyboardHide = () => {
     setLoginData(state);
@@ -73,6 +82,7 @@ const CreatePostsScreen = ({ navigation }) => {
 
     setPostData(prevState => ({ ...prevState, photo: photo.uri }));
     setLocation(currentLocation.coords);
+    camera.pausePreview();
   };
 
   const loadFoto = async () => {
@@ -110,11 +120,7 @@ const CreatePostsScreen = ({ navigation }) => {
   const sendPhoto = () => {
     loadPost();
     navigation.navigate('DefaultScreen');
-    setPostData(prevState => ({
-      ...prevState,
-      name: '',
-      place: '',
-    }));
+    setPostData(initialState);
   };
 
   if (hasCamPermission === false) {
@@ -123,26 +129,28 @@ const CreatePostsScreen = ({ navigation }) => {
 
   return (
     <View style={styles.tabContainerCreate}>
-      <Camera style={styles.camera} ref={setCamera}>
-        {postData.photo && (
-          <View
-            style={
-              keyboardStatus
-                ? styles.photoContainerSmal
-                : styles.photoContainerBig
-            }
-          >
-            <Image
-              source={{ uri: postData.photo }}
-              style={keyboardStatus ? styles.photoSmal : styles.photoBig}
-            />
-          </View>
-        )}
+      {isFocused && (
+        <Camera style={styles.camera} ref={setCamera}>
+          {postData.photo && (
+            <View
+              style={
+                keyboardStatus
+                  ? styles.photoContainerSmal
+                  : styles.photoContainerBig
+              }
+            >
+              <Image
+                source={{ uri: postData.photo }}
+                style={keyboardStatus ? styles.photoSmal : styles.photoBig}
+              />
+            </View>
+          )}
 
-        <TouchableOpacity style={styles.snapButton} onPress={makePhoto}>
-          <Feather name="camera" size={30} color="#ff8c00" />
-        </TouchableOpacity>
-      </Camera>
+          <TouchableOpacity style={styles.snapButton} onPress={makePhoto}>
+            <Feather name="camera" size={30} color="#ff8c00" />
+          </TouchableOpacity>
+        </Camera>
+      )}
       <View style={styles.cameraForm}>
         <TextInput
           value={postData.name}

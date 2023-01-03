@@ -19,6 +19,7 @@ const ProfileScreen = ({ navigation }) => {
   const [profilePosts, setProfilePosts] = useState([]);
 
   const id = stateScreen.userId;
+  // console.log('PROFILESCREEN!!!!!!!!!!!!!!!!!!!!');
 
   useEffect(() => {
     getAllProfilePosts();
@@ -33,8 +34,8 @@ const ProfileScreen = ({ navigation }) => {
         )
       );
       const posts = data.docs.map(doc => ({ ...doc.data(), id: doc.id }));
-      console.log(data);
-      console.log(posts);
+      // console.log(data);
+      // console.log(posts);
       setProfilePosts(posts);
     } catch (error) {
       Alert.alert('Oops!', 'Problem with receiving posts. Try again', [
