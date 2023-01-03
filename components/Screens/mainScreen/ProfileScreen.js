@@ -62,20 +62,12 @@ const ProfileScreen = ({ navigation }) => {
                 <View style={styles.imageWrapper}>
                   <Image source={{ uri: item.photo }} style={styles.image} />
                 </View>
-
                 <View style={styles.btnWrapper}>
                   <View>
                     <TouchableOpacity
                       activeOpacity={0.8}
                       onPress={() =>
-                        navigation.navigate(
-                          'Comments',
-                          { postId: item.id },
-                          console.log(
-                            'Comments-----item.id------onPress',
-                            item.id
-                          )
-                        )
+                        navigation.navigate('Comments', { postId: item.id })
                       }
                     >
                       <FontAwesome name="comment-o" size={24} color="#ff8c00" />

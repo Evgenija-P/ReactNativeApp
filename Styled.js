@@ -264,7 +264,6 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingTop: 10,
     paddingBottom: 10,
-    maxHeight: '70%',
   },
   profileTitle: {
     fontSize: 30,
