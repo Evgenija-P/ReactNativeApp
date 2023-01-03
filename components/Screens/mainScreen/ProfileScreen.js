@@ -36,7 +36,7 @@ const ProfileScreen = ({ navigation }) => {
       const posts = data.docs.map(doc => ({ ...doc.data(), id: doc.id }));
       setProfilePosts(posts);
     } catch (error) {
-      Alert.alert('Oops! Problem with receiving posts. Try again', [
+      Alert.alert('Oops!', 'Problem with receiving posts. Try again', [
         { text: 'OK', onPress: () => console.log('OK Pressed') },
       ]);
       console.error('Error adding document: ', error);
