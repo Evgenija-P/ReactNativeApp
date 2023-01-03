@@ -99,14 +99,10 @@ const CreatePostsScreen = ({ navigation }) => {
       });
       console.log('Document written with ID: ', docRef.id);
     } catch (error) {
-      Alert.alert('Sorry, we have problem' + `${error.message}`, [
-        {
-          text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel',
-        },
-        { text: 'OK', onPress: () => console.log('OK Pressed') },
-      ]);
+      Alert.alert(
+        'Oops! Problem with uploading photos. Try again.' + `${error.message}`,
+        [{ text: 'OK', onPress: () => console.log('OK Pressed') }]
+      );
       console.log('error.message', error.message);
     }
   };

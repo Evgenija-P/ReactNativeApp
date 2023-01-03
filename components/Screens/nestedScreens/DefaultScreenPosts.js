@@ -23,12 +23,7 @@ const DefaultScreenPosts = ({ navigation }) => {
       setPosts(posts);
       setStart(true);
     } catch (error) {
-      Alert.alert('Sorry, we have problem' + `${error.message}`, [
-        {
-          text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel',
-        },
+      Alert.alert('Oops! Problem with receiving posts. Try again', [
         { text: 'OK', onPress: () => console.log('OK Pressed') },
       ]);
       console.log('error.message', error.message);

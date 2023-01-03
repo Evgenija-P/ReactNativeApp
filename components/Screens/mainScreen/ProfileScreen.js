@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { View, Text, Image, FlatList, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  FlatList,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../../../firebase/config';
 import { Feather, FontAwesome } from '@expo/vector-icons';
@@ -21,15 +28,15 @@ const ProfileScreen = ({ navigation }) => {
     console.log(stateScreen.userId);
     try {
       const data = await getDocs(
-        query(
-          collection(db, 'users'),
-          where('userId', '==', `${stateScreen.userId}`)
-        )
+        query(collection(db, 'users'), where('userId', '==', `${id}`))
       );
       const posts = data.docs.map(doc => ({ ...doc.data(), id: doc.id }));
       setProfilePosts(posts);
-    } catch (e) {
-      console.error('Error adding document: ', e);
+    } catch (error) {
+      Alert.alert('Oops! Problem with receiving posts. Try again', [
+        { text: 'OK', onPress: () => console.log('OK Pressed') },
+      ]);
+      console.error('Error adding document: ', error);
     }
   };
 

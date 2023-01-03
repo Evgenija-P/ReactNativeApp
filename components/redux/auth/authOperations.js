@@ -22,12 +22,7 @@ export const register =
       );
       return { user: user, login };
     } catch (error) {
-      Alert.alert('Error', 'Sorry, we have problem', [
-        {
-          text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel',
-        },
+      Alert.alert('Oops! Error in email address / password', [
         { text: 'OK', onPress: () => console.log('OK Pressed') },
       ]);
       console.log('error.message', error.message);
@@ -46,12 +41,7 @@ export const login =
         })
       );
     } catch (error) {
-      Alert.alert('Error', 'Sorry, we have problem', [
-        {
-          text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel',
-        },
+      Alert.alert('Oops! Error in email address / password', [
         { text: 'OK', onPress: () => console.log('OK Pressed') },
       ]);
       console.log('error.message', error.message);
